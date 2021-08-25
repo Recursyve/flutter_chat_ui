@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+
 import '../util.dart';
 import 'file_message.dart';
 import 'image_message.dart';
@@ -44,8 +45,7 @@ class Message extends StatelessWidget {
   final void Function(types.Message)? onMessageTap;
 
   /// See [TextMessage.onPreviewDataFetched]
-  final void Function(types.TextMessage, types.PreviewData)?
-      onPreviewDataFetched;
+  final void Function(types.TextMessage, types.PreviewData)? onPreviewDataFetched;
 
   /// Rounds border of the message to visually group messages together.
   final bool roundBorder;
@@ -76,19 +76,34 @@ class Message extends StatelessWidget {
     return showAvatar
         ? Container(
             margin: const EdgeInsets.only(right: 8),
-            child: CircleAvatar(
-              backgroundImage:
-                  hasImage ? NetworkImage(message.author.imageUrl!) : null,
-              backgroundColor: hasImage ? null : color,
-              radius: 16,
-              child: !hasImage
-                  ? Text(
-                      name.isEmpty ? '' : name[0].toUpperCase(),
-                      style: InheritedChatTheme.of(context)
-                          .theme
-                          .userAvatarTextStyle,
-                    )
-                  : null,
+            child: Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                color: hasImage ? null : color,
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(4.0),
+                child: Stack(
+                  children: [
+                    if (hasImage)
+                      Image.network(
+                        message.author.imageUrl!,
+                        height: 32,
+                        width: 32,
+                      ),
+                    if (!hasImage) ...[
+                      Center(
+                        child: Text(
+                          name.isEmpty ? '' : name[0].toUpperCase(),
+                          style: InheritedChatTheme.of(context).theme.userAvatarTextStyle,
+                        ),
+                      ),
+                    ]
+                  ],
+                ),
+              ),
             ),
           )
         : const SizedBox(width: 40);
@@ -98,9 +113,7 @@ class Message extends StatelessWidget {
     switch (message.type) {
       case types.MessageType.custom:
         final customMessage = message as types.CustomMessage;
-        return buildCustomMessage != null
-            ? buildCustomMessage!(customMessage)
-            : const SizedBox();
+        return buildCustomMessage != null ? buildCustomMessage!(customMessage) : const SizedBox();
       case types.MessageType.file:
         final fileMessage = message as types.FileMessage;
         return FileMessage(
@@ -177,8 +190,7 @@ class Message extends StatelessWidget {
   Widget build(BuildContext context) {
     final _user = InheritedUser.of(context).user;
     final _currentUserIsAuthor = _user.id == message.author.id;
-    final _messageBorderRadius =
-        InheritedChatTheme.of(context).theme.messageBorderRadius;
+    final _messageBorderRadius = InheritedChatTheme.of(context).theme.messageBorderRadius;
     final _borderRadius = BorderRadius.only(
       bottomLeft: Radius.circular(
         _currentUserIsAuthor || roundBorder ? _messageBorderRadius : 0,
@@ -193,8 +205,7 @@ class Message extends StatelessWidget {
     );
 
     return Container(
-      alignment:
-          _currentUserIsAuthor ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: _currentUserIsAuthor ? Alignment.centerRight : Alignment.centerLeft,
       margin: const EdgeInsets.only(
         bottom: 4,
         left: 20,
@@ -217,8 +228,7 @@ class Message extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: _borderRadius,
-                      color: !_currentUserIsAuthor ||
-                              message.type == types.MessageType.image
+                      color: !_currentUserIsAuthor || message.type == types.MessageType.image
                           ? InheritedChatTheme.of(context).theme.secondaryColor
                           : InheritedChatTheme.of(context).theme.primaryColor,
                     ),

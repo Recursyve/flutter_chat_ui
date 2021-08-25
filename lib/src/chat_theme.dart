@@ -58,6 +58,7 @@ abstract class ChatTheme {
     required this.errorColor,
     required this.errorIcon,
     required this.inputBackgroundColor,
+    this.inputBorder,
     required this.inputBorderRadius,
     required this.inputTextStyle,
     required this.inputTextColor,
@@ -109,8 +110,11 @@ abstract class ChatTheme {
   /// Color of the bottom bar where text field is
   final Color inputBackgroundColor;
 
-  /// Top border radius of the bottom bar where text field is
+  /// Border radius of the text field
   final BorderRadius inputBorderRadius;
+
+  /// Border of the text input
+  final BoxBorder? inputBorder;
 
   /// Color of the text field's text and attachment/send buttons
   final Color inputTextColor;
@@ -216,6 +220,7 @@ class DefaultChatTheme extends ChatTheme {
     BorderRadius inputBorderRadius = const BorderRadius.vertical(
       top: Radius.circular(20),
     ),
+    BoxBorder? inputBorder,
     Color inputTextColor = NEUTRAL_7,
     TextStyle inputTextStyle = const TextStyle(
       fontFamily: 'Avenir',
@@ -312,6 +317,7 @@ class DefaultChatTheme extends ChatTheme {
           errorIcon: errorIcon,
           inputBackgroundColor: inputBackgroundColor,
           inputBorderRadius: inputBorderRadius,
+          inputBorder: inputBorder,
           inputTextColor: inputTextColor,
           inputTextStyle: inputTextStyle,
           messageBorderRadius: messageBorderRadius,
@@ -369,6 +375,7 @@ class DarkChatTheme extends ChatTheme {
     BorderRadius inputBorderRadius = const BorderRadius.vertical(
       top: Radius.circular(20),
     ),
+    BoxBorder? inputBorder,
     Color inputTextColor = NEUTRAL_7,
     TextStyle inputTextStyle = const TextStyle(
       fontFamily: 'Avenir',
@@ -465,6 +472,7 @@ class DarkChatTheme extends ChatTheme {
           errorIcon: errorIcon,
           inputBackgroundColor: inputBackgroundColor,
           inputBorderRadius: inputBorderRadius,
+          inputBorder: inputBorder,
           inputTextColor: inputTextColor,
           inputTextStyle: inputTextStyle,
           messageBorderRadius: messageBorderRadius,
