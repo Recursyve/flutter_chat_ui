@@ -45,6 +45,7 @@ class Chat extends StatefulWidget {
     this.theme = const DefaultChatTheme(),
     this.timeFormat,
     this.usePreviewData = true,
+    this.alwaysShowSendButton = false,
     required this.user,
   }) : super(key: key);
 
@@ -140,6 +141,9 @@ class Chat extends StatefulWidget {
 
   /// See [Message.usePreviewData]
   final bool usePreviewData;
+
+  /// Whether to always show the send button
+  final bool alwaysShowSendButton;
 
   /// See [InheritedUser.user]
   final types.User user;
@@ -360,6 +364,7 @@ class _ChatState extends State<Chat> {
                               ),
                       ),
                       Input(
+                        alwaysShowSendButton: widget.alwaysShowSendButton,
                         isAttachmentUploading: widget.isAttachmentUploading,
                         onAttachmentPressed: widget.onAttachmentPressed,
                         onSendPressed: widget.onSendPressed,

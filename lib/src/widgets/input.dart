@@ -21,6 +21,7 @@ class Input extends StatefulWidget {
   /// Creates [Input] widget
   const Input({
     Key? key,
+    this.alwaysShowSendButton = false,
     this.isAttachmentUploading,
     this.onAttachmentPressed,
     required this.onSendPressed,
@@ -29,6 +30,9 @@ class Input extends StatefulWidget {
 
   /// See [AttachmentButton.onPressed]
   final void Function()? onAttachmentPressed;
+
+  /// Whether to always show the send button
+  final bool alwaysShowSendButton;
 
   /// Whether attachment is uploading. Will replace attachment button with a
   /// [CircularProgressIndicator]. Since we don't have libraries for
@@ -57,6 +61,10 @@ class _InputState extends State<Input> {
   void initState() {
     super.initState();
     _textController.addListener(_handleTextControllerChange);
+
+    if (widget.alwaysShowSendButton == true) {
+      _sendButtonVisible = true;
+    }
   }
 
   @override
@@ -77,7 +85,9 @@ class _InputState extends State<Input> {
 
   void _handleTextControllerChange() {
     setState(() {
-      _sendButtonVisible = _textController.text.trim() != '';
+      if (widget.alwaysShowSendButton != true) {
+        _sendButtonVisible = _textController.text.trim() != '';
+      }
     });
   }
 

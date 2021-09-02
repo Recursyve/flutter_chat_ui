@@ -63,6 +63,7 @@ abstract class ChatTheme {
     required this.inputTextStyle,
     required this.inputTextColor,
     required this.messageBorderRadius,
+    required this.useMessageArrow,
     required this.primaryColor,
     required this.receivedMessageBodyTextStyle,
     required this.receivedMessageCaptionTextStyle,
@@ -124,6 +125,9 @@ abstract class ChatTheme {
 
   /// Border radius of message container
   final double messageBorderRadius;
+
+  /// Show an arrow in the direction of the avatar instead of no border radius
+  final bool useMessageArrow;
 
   /// Primary color of the chat used as a background of sent messages
   /// and statuses
@@ -229,6 +233,7 @@ class DefaultChatTheme extends ChatTheme {
       height: 1.5,
     ),
     double messageBorderRadius = 20.0,
+    bool useMessageArrow = false,
     Color primaryColor = PRIMARY,
     TextStyle receivedMessageBodyTextStyle = const TextStyle(
       color: NEUTRAL_0,
@@ -321,6 +326,7 @@ class DefaultChatTheme extends ChatTheme {
           inputTextColor: inputTextColor,
           inputTextStyle: inputTextStyle,
           messageBorderRadius: messageBorderRadius,
+          useMessageArrow: useMessageArrow,
           primaryColor: primaryColor,
           receivedMessageBodyTextStyle: receivedMessageBodyTextStyle,
           receivedMessageCaptionTextStyle: receivedMessageCaptionTextStyle,
@@ -384,6 +390,7 @@ class DarkChatTheme extends ChatTheme {
       height: 1.5,
     ),
     double messageBorderRadius = 20.0,
+    bool useMessageArrow = false,
     Color primaryColor = PRIMARY,
     TextStyle receivedMessageBodyTextStyle = const TextStyle(
       color: NEUTRAL_7,
@@ -476,6 +483,7 @@ class DarkChatTheme extends ChatTheme {
           inputTextColor: inputTextColor,
           inputTextStyle: inputTextStyle,
           messageBorderRadius: messageBorderRadius,
+          useMessageArrow: useMessageArrow,
           primaryColor: primaryColor,
           receivedMessageBodyTextStyle: receivedMessageBodyTextStyle,
           receivedMessageCaptionTextStyle: receivedMessageCaptionTextStyle,
