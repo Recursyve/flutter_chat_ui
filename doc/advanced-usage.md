@@ -44,16 +44,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Chat(
-        // ...
-        onAttachmentPressed: _handleImageSelection,
+      body: SafeArea(
+        bottom: false,
+        child: Chat(
+          // ...
+          onAttachmentPressed: _handleImageSelection,
+        ),
       ),
     );
   }
 }
 ```
 
-Similar to the text message, you will need to create an image message using data from the image picker. In this example, we use local path just for demo purposes, but for the backend service, you will upload the image first and then send the received URL using the `uri` parameter.
+Similar to the text message, you will need to create an image message using data from the image picker. In this example, we use local path just for demo purposes, but for the backend service, you will upload the image first and then send the received URL using the `uri` property.
 
 To keep the UI clean, the image message renders in two different ways, if the aspect ratio is too low or too high it renders like a file message, so you don't see a narrow line on the UI. The second way is a classic image in the chat. Go give it a try.
 
@@ -63,7 +66,7 @@ You can use this URL https://bit.ly/2P0cn2g to test the file message presentatio
 
 :::
 
-On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` parameter to the Chat widget.
+On tap, images will be previewed inside an interactive image gallery. To disable the image gallery pass `disableImageGallery` property to the `Chat` widget.
 
 ## Files
 
@@ -87,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id: randomString(),
         name: result.files.single.name,
         size: result.files.single.size,
-        uri: result.files.single.path ?? '',
+        uri: result.files.single.path,
       );
 
       _addMessage(message);
@@ -97,16 +100,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Chat(
-        // ...
-        onAttachmentPressed: _handleFileSelection,
+      body: SafeArea(
+        bottom: false,
+        child: Chat(
+          // ...
+          onAttachmentPressed: _handleFileSelection,
+        ),
       ),
     );
   }
 }
 ```
 
-Similar to the text message, you will need to create a file message using data from the document picker. In this example, `uri` will point to the local filesystem just for demo purposes, but for the backend service, you will upload the file first and then send the received URL using the `uri` parameter.
+Similar to the text message, you will need to create a file message using data from the document picker. In this example, `uri` will point to the local filesystem just for demo purposes, but for the backend service, you will upload the file first and then send the received URL using the `uri` property.
 
 ### Opening a file
 
@@ -127,9 +133,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Chat(
-        // ...
-        onMessageTap: _handleMessageTap,
+      body: SafeArea(
+        bottom: false,
+        child: Chat(
+          // ...
+          onMessageTap: _handleMessageTap,
+        ),
       ),
     );
   }
@@ -160,9 +169,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Chat(
-        // ...
-        onPreviewDataFetched: _handlePreviewDataFetched,
+      body: SafeArea(
+        bottom: false,
+        child: Chat(
+          // ...
+          onPreviewDataFetched: _handlePreviewDataFetched,
+        ),
       ),
     );
   }
@@ -279,7 +291,7 @@ class _MyHomePageState extends State<MyHomePage> {
         id: randomString(),
         name: result.files.single.name,
         size: result.files.single.size,
-        uri: result.files.single.path ?? '',
+        uri: result.files.single.path,
       );
 
       _addMessage(message);
@@ -346,13 +358,16 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Chat(
-        messages: _messages,
-        onAttachmentPressed: _handleAtachmentPressed,
-        onMessageTap: _handleMessageTap,
-        onPreviewDataFetched: _handlePreviewDataFetched,
-        onSendPressed: _handleSendPressed,
-        user: _user,
+      body: SafeArea(
+        bottom: false,
+        child: Chat(
+          messages: _messages,
+          onAttachmentPressed: _handleAtachmentPressed,
+          onMessageTap: _handleMessageTap,
+          onPreviewDataFetched: _handlePreviewDataFetched,
+          onSendPressed: _handleSendPressed,
+          user: _user,
+        ),
       ),
     );
   }
@@ -361,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
 ## Custom messages
 
-Use the `buildCustomMessage` function to build whatever message you want. To store the data use a `metadata` map of the `CustomMessage`. You can have multiple different custom messages, you will need to identify them based on some property inside the `metadata` and build accordingly.
+Use the `customMessageBuilder` function to build whatever message you want. To store the data use a `metadata` map of the `CustomMessage`. You can have multiple different custom messages, you will need to identify them based on some property inside the `metadata` and build accordingly.
 
 ## Pagination
 
@@ -405,9 +420,12 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Chat(
-        // ...
-        onEndReached: _handleEndReached,
+      body: SafeArea(
+        bottom: false,
+        child: Chat(
+          // ...
+          onEndReached: _handleEndReached,
+        ),
       ),
     );
   }

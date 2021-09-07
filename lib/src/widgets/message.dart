@@ -12,13 +12,13 @@ import 'inherited_user.dart';
 import 'text_message.dart';
 
 /// Base widget for all message types in the chat. Renders bubbles around
-/// messages, delivery time and status. Sets maximum width for a message for
+/// messages and status. Sets maximum width for a message for
 /// a nice look on larger screens.
 class Message extends StatelessWidget {
   /// Creates a particular message from any message type
   const Message({
     Key? key,
-    this.buildCustomMessage,
+    this.customMessageBuilder,
     required this.message,
     required this.messageWidth,
     this.onMessageLongPress,
@@ -33,7 +33,7 @@ class Message extends StatelessWidget {
   }) : super(key: key);
 
   /// Build a custom message inside predefined bubble
-  final Widget Function(types.CustomMessage)? buildCustomMessage;
+  final Widget Function(types.CustomMessage)? customMessageBuilder;
 
   /// Any message type
   final types.Message message;
@@ -69,7 +69,7 @@ class Message extends StatelessWidget {
   /// See [TextMessage.usePreviewData]
   final bool usePreviewData;
 
-  Widget _buildAvatar(BuildContext context) {
+  Widget _avatarBuilder(BuildContext context) {
     final _theme = InheritedChatTheme.of(context).theme;
     final color = getUserAvatarNameColor(
       message.author,
@@ -144,7 +144,7 @@ class Message extends StatelessWidget {
     switch (message.type) {
       case types.MessageType.custom:
         final customMessage = message as types.CustomMessage;
-        return buildCustomMessage != null ? buildCustomMessage!(customMessage) : const SizedBox();
+        return customMessageBuilder != null ? customMessageBuilder!(customMessage) : const SizedBox();
       case types.MessageType.file:
         final fileMessage = message as types.FileMessage;
         return FileMessage(
@@ -169,7 +169,7 @@ class Message extends StatelessWidget {
     }
   }
 
-  Widget _buildStatus(BuildContext context) {
+  Widget _statusBuilder(BuildContext context) {
     switch (message.status) {
       case types.Status.delivered:
       case types.Status.sent:
@@ -250,7 +250,7 @@ class Message extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (!_currentUserIsAuthor && showUserAvatars) _buildAvatar(context),
+          if (!_currentUserIsAuthor && showUserAvatars) _avatarBuilder(context),
           ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: messageWidth.toDouble(),
@@ -283,7 +283,7 @@ class Message extends StatelessWidget {
                 child: SizedBox(
                   height: 16,
                   width: 16,
-                  child: showStatus ? _buildStatus(context) : null,
+                  child: showStatus ? _statusBuilder(context) : null,
                 ),
               ),
             ),

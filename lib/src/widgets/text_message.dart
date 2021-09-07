@@ -72,9 +72,10 @@ class TextMessage extends StatelessWidget {
       metadataTextStyle: linkDescriptionTextStyle,
       metadataTitleStyle: linkTitleTextStyle,
       onPreviewDataFetched: _onPreviewDataFetched,
-      padding: const EdgeInsets.symmetric(
-        horizontal: 24,
-        vertical: 16,
+      padding: EdgeInsets.symmetric(
+        horizontal:
+            InheritedChatTheme.of(context).theme.messageInsetsHorizontal,
+        vertical: InheritedChatTheme.of(context).theme.messageInsetsVertical,
       ),
       previewData: message.previewData,
       text: message.text,
@@ -83,7 +84,7 @@ class TextMessage extends StatelessWidget {
     );
   }
 
-  Widget _textWidget(types.User user, BuildContext context) {
+  Widget _textWidgetBuilder(types.User user, BuildContext context) {
     final color = getUserAvatarNameColor(message.author,
         InheritedChatTheme.of(context).theme.userAvatarNameColors);
     final name = getUserName(message.author);
@@ -93,7 +94,7 @@ class TextMessage extends StatelessWidget {
       children: [
         if (showName)
           Padding(
-            padding: const EdgeInsets.only(bottom: 6.0),
+            padding: const EdgeInsets.only(bottom: 6),
             child: Text(
               name,
               maxLines: 1,
@@ -123,8 +124,8 @@ class TextMessage extends StatelessWidget {
     final _width = MediaQuery.of(context).size.width;
 
     if (usePreviewData && onPreviewDataFetched != null) {
-      final urlRegexp = RegExp(REGEX_LINK);
-      final matches = urlRegexp.allMatches(message.text.toLowerCase());
+      final urlRegexp = RegExp(REGEX_LINK, caseSensitive: false);
+      final matches = urlRegexp.allMatches(message.text);
 
       if (matches.isNotEmpty) {
         return _linkPreview(_user, _width, context);
@@ -132,11 +133,12 @@ class TextMessage extends StatelessWidget {
     }
 
     return Container(
-      margin: const EdgeInsets.symmetric(
-        horizontal: 24,
-        vertical: 16,
+      margin: EdgeInsets.symmetric(
+        horizontal:
+            InheritedChatTheme.of(context).theme.messageInsetsHorizontal,
+        vertical: InheritedChatTheme.of(context).theme.messageInsetsVertical,
       ),
-      child: _textWidget(_user, context),
+      child: _textWidgetBuilder(_user, context),
     );
   }
 }

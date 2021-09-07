@@ -43,7 +43,7 @@ const SECONDARY = Color(0xfff5f5f7);
 /// Secondary dark
 const SECONDARY_DARK = Color(0xff2b2250);
 
-/// Base chat theme containing all required variables to make a theme.
+/// Base chat theme containing all required properties to make a theme.
 /// Extend this class if you want to create a custom theme.
 @immutable
 abstract class ChatTheme {
@@ -60,10 +60,15 @@ abstract class ChatTheme {
     required this.inputBackgroundColor,
     this.inputBorder,
     required this.inputBorderRadius,
-    required this.inputTextStyle,
+    required this.inputPadding,
     required this.inputTextColor,
+    this.inputTextCursorColor,
+    required this.inputTextDecoration,
+    required this.inputTextStyle,
     required this.messageBorderRadius,
     required this.useMessageArrow,
+    required this.messageInsetsHorizontal,
+    required this.messageInsetsVertical,
     required this.primaryColor,
     required this.receivedMessageBodyTextStyle,
     required this.receivedMessageCaptionTextStyle,
@@ -79,6 +84,7 @@ abstract class ChatTheme {
     required this.sentMessageDocumentIconColor,
     required this.sentMessageLinkDescriptionTextStyle,
     required this.sentMessageLinkTitleTextStyle,
+    required this.userAvatarImageBackgroundColor,
     required this.userAvatarNameColors,
     required this.userAvatarTextStyle,
     required this.userNameTextStyle,
@@ -117,8 +123,17 @@ abstract class ChatTheme {
   /// Border of the text input
   final BoxBorder? inputBorder;
 
+  /// Insets of the bottom bar where text field is
+  final EdgeInsetsGeometry inputPadding;
+
   /// Color of the text field's text and attachment/send buttons
   final Color inputTextColor;
+
+  /// Color of the text field's cursor
+  final Color? inputTextCursorColor;
+
+  /// Decoration of the input text field
+  final InputDecoration inputTextDecoration;
 
   /// Text style of the message input. To change the color use [inputTextColor].
   final TextStyle inputTextStyle;
@@ -128,6 +143,12 @@ abstract class ChatTheme {
 
   /// Show an arrow in the direction of the avatar instead of no border radius
   final bool useMessageArrow;
+
+  /// Horizontal message bubble insets
+  final double messageInsetsHorizontal;
+
+  /// Vertical message bubble insets
+  final double messageInsetsVertical;
 
   /// Primary color of the chat used as a background of sent messages
   /// and statuses
@@ -181,7 +202,12 @@ abstract class ChatTheme {
   /// Text style used for displaying link title on sent messages
   final TextStyle sentMessageLinkTitleTextStyle;
 
-  /// Colors used as backgrounds for user avatars and corresponded user names.
+  /// Color used as a background for user avatar if an image is provided.
+  /// Visible if the image has some transparent parts.
+  final Color userAvatarImageBackgroundColor;
+
+  /// Colors used as backgrounds for user avatars with no image and so,
+  /// corresponding user names.
   /// Calculated based on a user ID, so unique across the whole app.
   final List<Color> userAvatarNameColors;
 
@@ -197,7 +223,7 @@ abstract class ChatTheme {
 @immutable
 class DefaultChatTheme extends ChatTheme {
   /// Creates a default chat theme. Use this constructor if you want to
-  /// override only a couple of variables, otherwise create a new class
+  /// override only a couple of properties, otherwise create a new class
   /// which extends [ChatTheme]
   const DefaultChatTheme({
     Widget? attachmentButtonIcon,
@@ -225,7 +251,14 @@ class DefaultChatTheme extends ChatTheme {
       top: Radius.circular(20),
     ),
     BoxBorder? inputBorder,
+    EdgeInsetsGeometry inputPadding = EdgeInsets.zero,
     Color inputTextColor = NEUTRAL_7,
+    Color? inputTextCursorColor,
+    InputDecoration inputTextDecoration = const InputDecoration(
+      border: InputBorder.none,
+      contentPadding: EdgeInsets.zero,
+      isCollapsed: true,
+    ),
     TextStyle inputTextStyle = const TextStyle(
       fontFamily: 'Avenir',
       fontSize: 16,
@@ -234,6 +267,8 @@ class DefaultChatTheme extends ChatTheme {
     ),
     double messageBorderRadius = 20.0,
     bool useMessageArrow = false,
+    double messageInsetsHorizontal = 20,
+    double messageInsetsVertical = 16,
     Color primaryColor = PRIMARY,
     TextStyle receivedMessageBodyTextStyle = const TextStyle(
       color: NEUTRAL_0,
@@ -297,6 +332,7 @@ class DefaultChatTheme extends ChatTheme {
       fontWeight: FontWeight.w800,
       height: 1.375,
     ),
+    Color userAvatarImageBackgroundColor = Colors.transparent,
     List<Color> userAvatarNameColors = COLORS,
     TextStyle userAvatarTextStyle = const TextStyle(
       color: NEUTRAL_7,
@@ -323,10 +359,15 @@ class DefaultChatTheme extends ChatTheme {
           inputBackgroundColor: inputBackgroundColor,
           inputBorderRadius: inputBorderRadius,
           inputBorder: inputBorder,
+          inputPadding: inputPadding,
           inputTextColor: inputTextColor,
+          inputTextCursorColor: inputTextCursorColor,
+          inputTextDecoration: inputTextDecoration,
           inputTextStyle: inputTextStyle,
           messageBorderRadius: messageBorderRadius,
           useMessageArrow: useMessageArrow,
+          messageInsetsHorizontal: messageInsetsHorizontal,
+          messageInsetsVertical: messageInsetsVertical,
           primaryColor: primaryColor,
           receivedMessageBodyTextStyle: receivedMessageBodyTextStyle,
           receivedMessageCaptionTextStyle: receivedMessageCaptionTextStyle,
@@ -344,6 +385,7 @@ class DefaultChatTheme extends ChatTheme {
           sentMessageLinkDescriptionTextStyle:
               sentMessageLinkDescriptionTextStyle,
           sentMessageLinkTitleTextStyle: sentMessageLinkTitleTextStyle,
+          userAvatarImageBackgroundColor: userAvatarImageBackgroundColor,
           userAvatarNameColors: userAvatarNameColors,
           userAvatarTextStyle: userAvatarTextStyle,
           userNameTextStyle: userNameTextStyle,
@@ -354,7 +396,7 @@ class DefaultChatTheme extends ChatTheme {
 @immutable
 class DarkChatTheme extends ChatTheme {
   /// Creates a dark chat theme. Use this constructor if you want to
-  /// override only a couple of variables, otherwise create a new class
+  /// override only a couple of properties, otherwise create a new class
   /// which extends [ChatTheme]
   const DarkChatTheme({
     Widget? attachmentButtonIcon,
@@ -382,7 +424,14 @@ class DarkChatTheme extends ChatTheme {
       top: Radius.circular(20),
     ),
     BoxBorder? inputBorder,
+    EdgeInsetsGeometry inputPadding = EdgeInsets.zero,
     Color inputTextColor = NEUTRAL_7,
+    Color? inputTextCursorColor,
+    InputDecoration inputTextDecoration = const InputDecoration(
+      border: InputBorder.none,
+      contentPadding: EdgeInsets.zero,
+      isCollapsed: true,
+    ),
     TextStyle inputTextStyle = const TextStyle(
       fontFamily: 'Avenir',
       fontSize: 16,
@@ -391,6 +440,8 @@ class DarkChatTheme extends ChatTheme {
     ),
     double messageBorderRadius = 20.0,
     bool useMessageArrow = false,
+    double messageInsetsHorizontal = 20,
+    double messageInsetsVertical = 16,
     Color primaryColor = PRIMARY,
     TextStyle receivedMessageBodyTextStyle = const TextStyle(
       color: NEUTRAL_7,
@@ -454,6 +505,7 @@ class DarkChatTheme extends ChatTheme {
       fontWeight: FontWeight.w800,
       height: 1.375,
     ),
+    Color userAvatarImageBackgroundColor = Colors.transparent,
     List<Color> userAvatarNameColors = COLORS,
     TextStyle userAvatarTextStyle = const TextStyle(
       color: NEUTRAL_7,
@@ -480,7 +532,12 @@ class DarkChatTheme extends ChatTheme {
           inputBackgroundColor: inputBackgroundColor,
           inputBorderRadius: inputBorderRadius,
           inputBorder: inputBorder,
+          messageInsetsHorizontal: messageInsetsHorizontal,
+          messageInsetsVertical: messageInsetsVertical,
+          inputPadding: inputPadding,
           inputTextColor: inputTextColor,
+          inputTextCursorColor: inputTextCursorColor,
+          inputTextDecoration: inputTextDecoration,
           inputTextStyle: inputTextStyle,
           messageBorderRadius: messageBorderRadius,
           useMessageArrow: useMessageArrow,
@@ -501,6 +558,7 @@ class DarkChatTheme extends ChatTheme {
           sentMessageLinkDescriptionTextStyle:
               sentMessageLinkDescriptionTextStyle,
           sentMessageLinkTitleTextStyle: sentMessageLinkTitleTextStyle,
+          userAvatarImageBackgroundColor: userAvatarImageBackgroundColor,
           userAvatarNameColors: userAvatarNameColors,
           userAvatarTextStyle: userAvatarTextStyle,
           userNameTextStyle: userNameTextStyle,

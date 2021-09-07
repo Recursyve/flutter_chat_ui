@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+import '../models/send_button_visibility_mode.dart';
 
 import 'attachment_button.dart';
 import 'inherited_chat_theme.dart';
@@ -16,7 +17,7 @@ class SendMessageIntent extends Intent {
 }
 
 /// A class that represents bottom bar widget with a text field, attachment and
-/// send buttons inside. Hides send button when text field is empty.
+/// send buttons inside. By default hides send button when text field is empty.
 class Input extends StatefulWidget {
   /// Creates [Input] widget
   const Input({
@@ -26,6 +27,8 @@ class Input extends StatefulWidget {
     this.onAttachmentPressed,
     required this.onSendPressed,
     this.onTextChanged,
+    this.onTextFieldTap,
+    required this.sendButtonVisibilityMode,
   }) : super(key: key);
 
   /// See [AttachmentButton.onPressed]
@@ -46,6 +49,14 @@ class Input extends StatefulWidget {
 
   /// Will be called whenever the text inside [TextField] changes
   final void Function(String)? onTextChanged;
+
+  /// Will be called on [TextField] tap
+  final void Function()? onTextFieldTap;
+
+  /// Controls the visibility behavior of the [SendButton] based on the
+  /// [TextField] state inside the [Input] widget.
+  /// Defaults to [SendButtonVisibilityMode.editing].
+  final SendButtonVisibilityMode sendButtonVisibilityMode;
 
   @override
   _InputState createState() => _InputState();
