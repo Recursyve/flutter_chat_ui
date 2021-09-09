@@ -264,7 +264,8 @@ class Message extends StatelessWidget {
                   child: _theme.useMessageArrow ? (
                       showAvatar ? Stack(
                         children: [
-                          _buildArrow(bgColor, !_currentUserIsAuthor),
+                          if (message.type == types.MessageType.text)
+                            _buildArrow(bgColor, !_currentUserIsAuthor),
                           _buildMessageBox(_borderRadius, bgColor)
                         ],
                       ) : Padding(
