@@ -37,11 +37,10 @@ class FileMessage extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: _color.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(21),
               ),
-              height: 42,
-              width: 42,
+              height: InheritedChatTheme.of(context).theme.documentIconSize ?? 42,
+              width: InheritedChatTheme.of(context).theme.documentIconSize ?? 42,
               child: InheritedChatTheme.of(context).theme.documentIcon != null
                   ? InheritedChatTheme.of(context).theme.documentIcon!
                   : Image.asset(
@@ -69,21 +68,22 @@ class FileMessage extends StatelessWidget {
                               .receivedMessageBodyTextStyle,
                       textWidthBasis: TextWidthBasis.longestLine,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                        top: 4,
+                    if (message.size.toInt() > 0)
+                      Container(
+                        margin: const EdgeInsets.only(
+                          top: 4,
+                        ),
+                        child: Text(
+                          formatBytes(message.size.toInt()),
+                          style: _user.id == message.author.id
+                              ? InheritedChatTheme.of(context)
+                                  .theme
+                                  .sentMessageCaptionTextStyle
+                              : InheritedChatTheme.of(context)
+                                  .theme
+                                  .receivedMessageCaptionTextStyle,
+                        ),
                       ),
-                      child: Text(
-                        formatBytes(message.size.toInt()),
-                        style: _user.id == message.author.id
-                            ? InheritedChatTheme.of(context)
-                                .theme
-                                .sentMessageCaptionTextStyle
-                            : InheritedChatTheme.of(context)
-                                .theme
-                                .receivedMessageCaptionTextStyle,
-                      ),
-                    ),
                   ],
                 ),
               ),

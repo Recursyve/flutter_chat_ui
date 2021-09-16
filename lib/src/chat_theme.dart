@@ -54,6 +54,7 @@ abstract class ChatTheme {
     required this.dateDividerTextStyle,
     required this.deliveredIcon,
     required this.documentIcon,
+    required this.documentIconSize,
     required this.emptyChatPlaceholderTextStyle,
     required this.errorColor,
     required this.errorIcon,
@@ -71,6 +72,7 @@ abstract class ChatTheme {
     required this.messageInsetsVertical,
     required this.primaryColor,
     required this.receivedMessageBodyTextStyle,
+    required this.receivedMessageBoxDecoration,
     required this.receivedMessageCaptionTextStyle,
     required this.receivedMessageDocumentIconColor,
     required this.receivedMessageLinkDescriptionTextStyle,
@@ -80,6 +82,7 @@ abstract class ChatTheme {
     required this.sendButtonIcon,
     required this.sendingIcon,
     required this.sentMessageBodyTextStyle,
+    required this.sentMessageBoxDecoration,
     required this.sentMessageCaptionTextStyle,
     required this.sentMessageDocumentIconColor,
     required this.sentMessageLinkDescriptionTextStyle,
@@ -104,6 +107,9 @@ abstract class ChatTheme {
 
   /// Icon inside file message
   final Widget? documentIcon;
+
+  /// Icon size inside file message
+  final double? documentIconSize;
 
   /// Text style of the empty chat placeholder
   final TextStyle emptyChatPlaceholderTextStyle;
@@ -158,6 +164,10 @@ abstract class ChatTheme {
   /// of received messages
   final TextStyle receivedMessageBodyTextStyle;
 
+  /// Box decoration for displaying text on different types
+  /// of received messages
+  final BoxDecoration? receivedMessageBoxDecoration;
+
   /// Caption text style used for displaying secondary info (e.g. file size)
   /// on different types of received messages
   final TextStyle receivedMessageCaptionTextStyle;
@@ -187,6 +197,10 @@ abstract class ChatTheme {
   /// Body text style used for displaying text on different types
   /// of sent messages
   final TextStyle sentMessageBodyTextStyle;
+
+  /// Box decoration for displaying text on different types
+  /// of sent messages
+  final BoxDecoration? sentMessageBoxDecoration;
 
   /// Caption text style used for displaying secondary info (e.g. file size)
   /// on different types of sent messages
@@ -237,6 +251,7 @@ class DefaultChatTheme extends ChatTheme {
     ),
     Widget? deliveredIcon,
     Widget? documentIcon,
+    double? documentIconSize,
     TextStyle emptyChatPlaceholderTextStyle = const TextStyle(
       color: NEUTRAL_2,
       fontFamily: 'Avenir',
@@ -277,6 +292,7 @@ class DefaultChatTheme extends ChatTheme {
       fontWeight: FontWeight.w500,
       height: 1.5,
     ),
+    BoxDecoration? receivedMessageBoxDecoration,
     TextStyle receivedMessageCaptionTextStyle = const TextStyle(
       color: NEUTRAL_2,
       fontFamily: 'Avenir',
@@ -310,6 +326,7 @@ class DefaultChatTheme extends ChatTheme {
       fontWeight: FontWeight.w500,
       height: 1.5,
     ),
+    BoxDecoration? sentMessageBoxDecoration,
     TextStyle sentMessageCaptionTextStyle = const TextStyle(
       color: NEUTRAL_7_WITH_OPACITY,
       fontFamily: 'Avenir',
@@ -353,6 +370,7 @@ class DefaultChatTheme extends ChatTheme {
           dateDividerTextStyle: dateDividerTextStyle,
           deliveredIcon: deliveredIcon,
           documentIcon: documentIcon,
+          documentIconSize: documentIconSize,
           emptyChatPlaceholderTextStyle: emptyChatPlaceholderTextStyle,
           errorColor: errorColor,
           errorIcon: errorIcon,
@@ -370,6 +388,7 @@ class DefaultChatTheme extends ChatTheme {
           messageInsetsVertical: messageInsetsVertical,
           primaryColor: primaryColor,
           receivedMessageBodyTextStyle: receivedMessageBodyTextStyle,
+          receivedMessageBoxDecoration: receivedMessageBoxDecoration,
           receivedMessageCaptionTextStyle: receivedMessageCaptionTextStyle,
           receivedMessageDocumentIconColor: receivedMessageDocumentIconColor,
           receivedMessageLinkDescriptionTextStyle:
@@ -380,6 +399,7 @@ class DefaultChatTheme extends ChatTheme {
           sendButtonIcon: sendButtonIcon,
           sendingIcon: sendingIcon,
           sentMessageBodyTextStyle: sentMessageBodyTextStyle,
+          sentMessageBoxDecoration: sentMessageBoxDecoration,
           sentMessageCaptionTextStyle: sentMessageCaptionTextStyle,
           sentMessageDocumentIconColor: sentMessageDocumentIconColor,
           sentMessageLinkDescriptionTextStyle:
@@ -410,6 +430,7 @@ class DarkChatTheme extends ChatTheme {
     ),
     Widget? deliveredIcon,
     Widget? documentIcon,
+    double? documentIconSize,
     TextStyle emptyChatPlaceholderTextStyle = const TextStyle(
       color: NEUTRAL_2,
       fontFamily: 'Avenir',
@@ -450,6 +471,7 @@ class DarkChatTheme extends ChatTheme {
       fontWeight: FontWeight.w500,
       height: 1.5,
     ),
+    BoxDecoration? receivedMessageBoxDecoration,
     TextStyle receivedMessageCaptionTextStyle = const TextStyle(
       color: NEUTRAL_7_WITH_OPACITY,
       fontFamily: 'Avenir',
@@ -483,6 +505,7 @@ class DarkChatTheme extends ChatTheme {
       fontWeight: FontWeight.w500,
       height: 1.5,
     ),
+    BoxDecoration? sentMessageBoxDecoration,
     TextStyle sentMessageCaptionTextStyle = const TextStyle(
       color: NEUTRAL_7_WITH_OPACITY,
       fontFamily: 'Avenir',
@@ -526,6 +549,7 @@ class DarkChatTheme extends ChatTheme {
           dateDividerTextStyle: dateDividerTextStyle,
           deliveredIcon: deliveredIcon,
           documentIcon: documentIcon,
+          documentIconSize: documentIconSize,
           emptyChatPlaceholderTextStyle: emptyChatPlaceholderTextStyle,
           errorColor: errorColor,
           errorIcon: errorIcon,
@@ -543,6 +567,7 @@ class DarkChatTheme extends ChatTheme {
           useMessageArrow: useMessageArrow,
           primaryColor: primaryColor,
           receivedMessageBodyTextStyle: receivedMessageBodyTextStyle,
+          receivedMessageBoxDecoration: receivedMessageBoxDecoration,
           receivedMessageCaptionTextStyle: receivedMessageCaptionTextStyle,
           receivedMessageDocumentIconColor: receivedMessageDocumentIconColor,
           receivedMessageLinkDescriptionTextStyle:
@@ -553,6 +578,7 @@ class DarkChatTheme extends ChatTheme {
           sendButtonIcon: sendButtonIcon,
           sendingIcon: sendingIcon,
           sentMessageBodyTextStyle: sentMessageBodyTextStyle,
+          sentMessageBoxDecoration: sentMessageBoxDecoration,
           sentMessageCaptionTextStyle: sentMessageCaptionTextStyle,
           sentMessageDocumentIconColor: sentMessageDocumentIconColor,
           sentMessageLinkDescriptionTextStyle:

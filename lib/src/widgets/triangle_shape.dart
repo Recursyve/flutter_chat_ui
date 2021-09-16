@@ -7,13 +7,26 @@ class TriangleShape extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..color = bgColor;
+    final linePaint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 10;
 
-    var path = Path();
-    path.lineTo(-10, 0);
-    path.lineTo(0, 10);
-    path.lineTo(10, 0);
-    canvas.drawPath(path, paint);
+    final linePath = Path();
+    linePath.moveTo(-10, 0);
+    linePath.lineTo(10, 0);
+    canvas.drawPath(linePath, linePaint);
+
+    final trianglePaint = Paint()
+      ..color = bgColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+
+    final trianglePath = Path();
+    trianglePath.moveTo(-10, 0);
+    trianglePath.lineTo(0, 10);
+    trianglePath.lineTo(10, 0);
+    canvas.drawPath(trianglePath, trianglePaint);
   }
 
   @override

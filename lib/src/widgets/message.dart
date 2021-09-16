@@ -86,6 +86,7 @@ class Message extends StatelessWidget {
               height: 32,
               decoration: BoxDecoration(
                 color: hasImage ? null : color,
+                border: hasImage ? null : Border.all(color: Colors.white54),
                 borderRadius: BorderRadius.circular(4.0),
               ),
               child: ClipRRect(
@@ -117,7 +118,8 @@ class Message extends StatelessWidget {
   Widget _buildArrow(Color bgColor, bool left) {
     return Positioned(
         bottom: 18.0,
-        right: left ? null : 0.0,
+        left: left ? 0.5 : null,
+        right: left ? null : 0.5,
         child: Transform.rotate(
           angle: (pi / 2) * (left ? 1 : -1),
           child: CustomPaint(
@@ -127,9 +129,9 @@ class Message extends StatelessWidget {
     );
   }
 
-  Widget _buildMessageBox(BorderRadius radius, Color bgColor) {
+  Widget _buildMessageBox(BorderRadius radius, Color bgColor, BoxDecoration? boxDecoration) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: boxDecoration ?? BoxDecoration(
         borderRadius: radius,
         color: bgColor,
       ),
@@ -240,6 +242,11 @@ class Message extends StatelessWidget {
         message.type == types.MessageType.image
         ? _theme.secondaryColor
         : _theme.primaryColor;
+
+    final messageBoxDecoration =
+        message.type == types.MessageType.image ? null : !_currentUserIsAuthor
+        ? _theme.receivedMessageBoxDecoration
+        : _theme.sentMessageBoxDecoration;
     return Container(
       alignment: _currentUserIsAuthor ? Alignment.centerRight : Alignment.centerLeft,
       margin: const EdgeInsets.only(
@@ -264,15 +271,15 @@ class Message extends StatelessWidget {
                   child: _theme.useMessageArrow ? (
                       showAvatar ? Stack(
                         children: [
-                          if (message.type == types.MessageType.text)
+                          _buildMessageBox(_borderRadius, bgColor, messageBoxDecoration),
+                          if (message.type != types.MessageType.image)
                             _buildArrow(bgColor, !_currentUserIsAuthor),
-                          _buildMessageBox(_borderRadius, bgColor)
                         ],
                       ) : Padding(
                         padding: const EdgeInsets.only(left: 12.0),
-                        child: _buildMessageBox(_borderRadius, bgColor),
+                        child: _buildMessageBox(_borderRadius, bgColor, messageBoxDecoration),
                       )
-                  ) : _buildMessageBox(_borderRadius, bgColor)
+                  ) : _buildMessageBox(_borderRadius, bgColor, messageBoxDecoration)
                 ),
               ],
             ),
