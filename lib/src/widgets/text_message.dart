@@ -85,8 +85,6 @@ class TextMessage extends StatelessWidget {
   }
 
   Widget _textWidgetBuilder(types.User user, BuildContext context) {
-    final color = getUserAvatarNameColor(message.author,
-        InheritedChatTheme.of(context).theme.userAvatarNameColors);
     final name = getUserName(message.author);
 
     return Column(
@@ -101,8 +99,7 @@ class TextMessage extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: InheritedChatTheme.of(context)
                   .theme
-                  .userNameTextStyle
-                  .copyWith(color: color),
+                  .userNameTextStyle,
             ),
           ),
         SelectableText(

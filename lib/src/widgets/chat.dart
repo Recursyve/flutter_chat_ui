@@ -47,6 +47,7 @@ class Chat extends StatefulWidget {
     this.sendButtonVisibilityMode = SendButtonVisibilityMode.editing,
     this.showUserAvatars = false,
     this.showUserNames = false,
+    this.userNamesInMessageBox = true,
     this.theme = const DefaultChatTheme(),
     this.timeFormat,
     this.usePreviewData = true,
@@ -141,6 +142,9 @@ class Chat extends StatefulWidget {
   /// Show user names for received messages. Useful for a group chat. Will be
   /// shown only on text messages.
   final bool showUserNames;
+
+  /// Show user names for received messages inside the message box.
+  final bool userNamesInMessageBox;
 
   /// Chat theme. Extend [ChatTheme] class to create your own theme or use
   /// existing one, like the [DefaultChatTheme]. You can customize only certain
@@ -308,6 +312,7 @@ class _ChatState extends State<Chat> {
         roundBorder: map['nextMessageInGroup'] == true,
         showAvatar: map['nextMessageInGroup'] == false,
         showName: map['showName'] == true,
+        userNamesInMessageBox: map['userNamesInMessageBox'] == true,
         showStatus: map['showStatus'] == true,
         showUserAvatars: widget.showUserAvatars,
         usePreviewData: widget.usePreviewData,

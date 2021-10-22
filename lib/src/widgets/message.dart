@@ -27,6 +27,7 @@ class Message extends StatelessWidget {
     required this.roundBorder,
     required this.showAvatar,
     required this.showName,
+    required this.userNamesInMessageBox,
     required this.showStatus,
     required this.showUserAvatars,
     required this.usePreviewData,
@@ -59,6 +60,9 @@ class Message extends StatelessWidget {
 
   /// See [TextMessage.showName]
   final bool showName;
+
+  /// Show user names for received messages inside the message box
+  final bool userNamesInMessageBox;
 
   /// Show message's status
   final bool showStatus;
@@ -163,7 +167,7 @@ class Message extends StatelessWidget {
         return TextMessage(
           message: textMessage,
           onPreviewDataFetched: onPreviewDataFetched,
-          showName: showName,
+          showName: showName && userNamesInMessageBox,
           usePreviewData: usePreviewData,
         );
       default:
@@ -263,8 +267,20 @@ class Message extends StatelessWidget {
               maxWidth: messageWidth.toDouble(),
             ),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (showName && !userNamesInMessageBox)
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 6, left: showAvatar ? 0 : 12.0),
+                    child: Text(
+                      getUserName(message.author),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: InheritedChatTheme.of(context)
+                          .theme
+                          .userNameTextStyle,
+                    ),
+                  ),
                 GestureDetector(
                   onLongPress: () => onMessageLongPress?.call(message),
                   onTap: () => onMessageTap?.call(message),
